@@ -1,39 +1,37 @@
 # software-testing-course
-Software Testing Course Project - Automated Testing, Test Data, and Quality Assurance（人工智能安全检测与防护系统）
-# SkyGuard 模块一自动化测试工程
 
-本工程用于 SkyGuard 模块一自动化测试，覆盖结果路径、可视化结果接口、任务进度接口和关键前端交互契约。测试不加载 YOLO 模型、不访问 GPU，也不会修改现有业务结果；文件类测试只在临时目录中运行。
+SkyGuard UAV Defense 软件质量测试课程实践项目，包含平台源码、模块一自动化测试工程和课程交付文档。
 
-## 环境
+## 项目结构
 
-- Windows 10/11
-- Conda 环境 `skyguard`
-- Python 3.10 或项目当前兼容版本
-- 已安装项目后端依赖（FastAPI 等）
+- `backend/`：FastAPI、Celery、攻击、防御与结果可视化后端源码
+- `frontend/`：React + Vite 前端源码
+- `airsim/`：AirSim 联调相关代码
+- `module1_tests/`：植入项目根目录的模块一自动化测试工程
+- `SkyGuard_模块一_自动化测试工程/`：课程交付版自动化测试工程
+- `SkyGuard_Windows_Setup.md`：Windows 环境启动说明
+- `SkyGuard_README.md`：原项目详细说明
 
-## 一键运行
+数据集、模型训练结果、攻击结果、`node_modules` 和模型权重未提交到仓库，需按启动说明自行准备。
 
-在资源管理器中双击 `run_tests.bat`，或在 PowerShell 中执行：
+## 测试范围
 
-```powershell
-.\module1_tests\run_tests.ps1
+40条自动化用例覆盖结果路径、可视化结果接口、任务进度接口和关键前端交互契约。快速测试不加载YOLO模型、不访问GPU，也不修改已有业务结果；真实PGD攻击、模型训练和AirSim联调需要单独执行。
+
+## 首次缺陷发现
+
+在项目根目录执行：
+
+```bat
+module1_tests\run_tests.bat
 ```
 
-等价命令：
+预期结果为40条用例中36条通过、4条失败，通过率90%。4条失败用例用于复现并关联SG-001至SG-004，因此脚本退出码为1属于预期结果。
 
-```powershell
-conda run --no-capture-output -n skyguard python module1_tests\run_all.py
+## 修复后回归
+
+```bat
+module1_tests\run_regression_tests.bat
 ```
 
-退出码为 0 表示全部通过；非 0 表示至少一个用例失败。命令行显示的 `TCxxx` 编号和中文名称与 Excel 测试用例清单一一对应。
-
-## 覆盖范围
-
-- `test_result_paths.py`：规范结果目录、旧目录兼容和查找优先级。
-- `test_visualization_api.py`：图片递归发现、URL、指标、边界值和路径穿越防护。
-- `test_progress_api.py`：四类任务进度落盘、时间戳、内存与磁盘读取。
-- `test_frontend_contracts.py`：首页按钮路由、代理配置、CPU 自动选择和对象错误格式化。
-
-## 限制
-
-这些测试属于稳定、可重复执行的接口和契约测试。真实 PGD 攻击、YOLO 推理、对抗训练和 AirSim 联调耗时长且依赖数据、模型、Redis/Celery 或仿真器，应作为人工系统测试单独执行并保留截图或日志。
+预期结果为40条全部通过、0条失败，通过率100%，脚本退出码为0。控制台中的`TCxxx`编号和中文名称与测试用例清单一一对应。

@@ -1,0 +1,7 @@
+cd /d C:\Users\wjx\SkyGuard-UAV-Defense
+
+首次缺陷发现（预期 36 通过、4 失败、通过率 90%）：
+module1_tests\run_tests.bat
+
+修复后回归（预期 40 通过、0 失败、通过率 100%）：
+module1_tests\run_regression_tests.bat
