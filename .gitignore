@@ -40,7 +40,6 @@ env/
 # 后端
 backend/assets/*
 backend/results/*
-*.pth
 !.gitkeep
 
 # 前端
@@ -75,8 +74,6 @@ datasets/
 results/
 
 # Large or generated project files
-*.pt
-*.onnx
 backend/results/
 backend/datasets/
 backend/models/runs/
