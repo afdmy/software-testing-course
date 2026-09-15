@@ -1,0 +1,2 @@
+cd /d C:\Users\wjx\SkyGuard-UAV-Defense
+module1_tests\run_tests.bat
